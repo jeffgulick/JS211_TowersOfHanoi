@@ -16,6 +16,9 @@ const rl = readline.createInterface({
         // * 4 is the largest, 
         // * 1 is the smallest
 
+let startPoint = []
+let endPoint = []
+
 let stacks = {
   a: [4, 3, 2, 1],
   b: [],
@@ -29,27 +32,51 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
-// Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
-
+// Func that moves the stones from one stack to another
+const movePiece = (start, end) => {
+  let ring = stacks[start].pop();
+  stacks[end].push(ring);
 }
 
-// Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
-
+// Func that is check for valid moves. Cannot stack large on small. checks for invalid input also
+const isLegal = (start, end) => {
+  if(start === 'a' || start === 'b' || start === 'c'){
+    if(end === 'a' || end === 'b' || end === 'c'){
+      if(stacks[start].slice(-1) < stacks[end].slice(-1) || stacks[end].slice(-1)==0) {
+        return true;
+      } else {
+        console.log("Invalid Move. Please try again");
+        return false;
+      }
+    } else {
+      console.log('Invalid Input')
+      return false;
+    }
+  } else {
+    console.log('Invalid Input')
+  }
 }
 
 // What is a win in Towers of Hanoi? When should this function run?
 const checkForWin = () => {
-  // Your code here
-
+  if(stacks['c'].length === 4){
+    if(stacks['c'][0] === 4 && stacks['c'][1] === 3 && stacks['c'][3] === 1){
+      console.log('Winner!!!!!!!!!!!!')
+      return true;
+    }
+  }
+  else {
+    return false;
+  }
 }
 
-// When is this function called? What should it do with its argument?
+// 
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
+  if (isLegal(startStack, endStack)){
+    movePiece(startStack, endStack)
+    checkForWin()
+  } 
+  
 
 }
 
@@ -94,7 +121,7 @@ if (typeof describe === 'function') {
   });
   describe('#checkForWin()', () => {
     it('should detect a win', () => {
-      stacks = { a: [], b: [4, 3, 2, 1], c: [] };
+      stacks = { a: [], b: [], c: [4, 3, 2, 1] };
       assert.equal(checkForWin(), true);
       stacks = { a: [1], b: [4, 3, 2], c: [] };
       assert.equal(checkForWin(), false);
