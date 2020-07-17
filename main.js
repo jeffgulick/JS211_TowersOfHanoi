@@ -7,7 +7,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
+//creating two empty arrays for moves
 let startPoint = []
 let endPoint = []
 
@@ -24,16 +24,19 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
-// Func that moves the stones from one stack to another
+// Func that moves the stones from one stack to another with array manip
 const movePiece = (start, end) => {
-  let ring = stacks[start].pop();
-  stacks[end].push(ring);
+
+  let ring = stacks[start].pop(); //removing last index
+  stacks[end].push(ring);//it goes here
 }
 
 // Func that is check for valid moves. Cannot stack large on small. checks for invalid input also
 const isLegal = (start, end) => {
+  //checks for any value other than abc
   if(start === 'a' || start === 'b' || start === 'c'){
     if(end === 'a' || end === 'b' || end === 'c'){
+  //checking the last index of one array against the next. this is checking for illegal move
       if(stacks[start].slice(-1) < stacks[end].slice(-1) || stacks[end].slice(-1)==0) {
         return true;
       } else {
@@ -49,21 +52,28 @@ const isLegal = (start, end) => {
   }
 }
 
-// What is a win in Towers of Hanoi? When should this function run?
+// Func that checks for win. checks length and order of stacks b and c
 const checkForWin = () => {
+//makes sure that the stack is first full
   if(stacks['c'].length === 4){
+ //checking values in 3 places for correct order
     if(stacks['c'][0] === 4 && stacks['c'][1] === 3 && stacks['c'][3] === 1){
       console.log('Winner!!!!!!!!!!!!')
       return true;
     }
-  }
-  else {
+  } else if(stacks['b'].length === 4){
+    if(stacks['b'][0] === 4 && stacks['b'][1] === 3 && stacks['b'][3] === 1){
+      console.log('Winner!!!!!!!!!!!!')
+      return true;
+    }
+  } else {
     return false;
   }
 }
 
 // Func thats checking for legal move, then calling func to move stone, and then checking for win
 const towersOfHanoi = (startStack, endStack) => {
+  
   if (isLegal(startStack, endStack)){
     movePiece(startStack, endStack)
     checkForWin()
