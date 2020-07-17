@@ -37,7 +37,7 @@ const isLegal = (start, end) => {
   if(start === 'a' || start === 'b' || start === 'c'){
     if(end === 'a' || end === 'b' || end === 'c'){
   //checking the last index of one array against the next. this is checking for illegal move
-      if(stacks[start].slice(-1) < stacks[end].slice(-1) || stacks[end].slice(-1)==0) {
+      if(stacks[start].slice(-1) < stacks[end].slice(-1) || stacks[end].slice(-1)==0 || stacks[start] == stacks[end]) {
         return true;
       } else {
         console.log("Invalid Move. Please try again");
