@@ -1,9 +1,27 @@
-CODE PLAN
+
+==========================================================================================================================
+===============Jeff Gulick CODE PLAN======================================================================================
+==========================================================================================================================
 1. You win the game by getting all for disks stacked in column B or C. Must be stacked greatest to leasts. [4,3,2,1]
 2. Can only move the last item of the array. Can only stack on the end of the ending array.
 3. Code must check for illegal moves. Larger pieces cannot be stacked onto smaller pieces.
 4. Game must start with all pieces in correct order on tower A.
 5. Will not allow illegal moves.
+6. Make a code plan with lots of equal signs in a readme file
+==========================================================================================================================
+=========================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
 
 # JS211_Towers of Hanoi[![CircleCI](https://circleci.com/gh/AustinCodingAcademy/javascript-workbook/tree/gh-pages.svg?style=svg)](https://circleci.com/gh/AustinCodingAcademy/javascript-workbook/tree/gh-pages)
 
