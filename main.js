@@ -7,52 +7,83 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-// An object that represents the three stacks of Towers of Hanoi; 
-  // * each key is an array of Numbers: 
-    // * A is the far-left, 
-    // * B is the middle, 
-    // * C is the far-right stack
-      // * Each number represents the largest to smallest tokens: 
-        // * 4 is the largest, 
-        // * 1 is the smallest
+//creating two empty arrays for moves
+let startPoint = []
+let endPoint = []
 
+//object of arrays that will be used to play the game. each array is a tower and each value is a disk or ring
 let stacks = {
   a: [4, 3, 2, 1],
   b: [],
   c: []
 };
 
-// Start here. What is this function doing?
+// func thats printing the current board to the terminal
 const printStacks = () => {
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
   console.log("c: " + stacks.c);
 }
 
-// Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
+// Func that moves the stones from one stack to another with array manip
+const movePiece = (start, end) => {
 
+  let ring = stacks[start].pop(); //removing last index
+  stacks[end].push(ring);//it goes here
 }
 
-// Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
-
+// Func that is check for valid moves. Cannot stack large on small. checks for invalid input also
+const isLegal = (start, end) => {
+  //checks for any value other than abc
+  if(start === 'a' || start === 'b' || start === 'c'){
+    if(end === 'a' || end === 'b' || end === 'c'){
+  //checking the last index of one array against the next. this is checking for illegal move
+      if(stacks[start].slice(-1) < stacks[end].slice(-1) || stacks[end].slice(-1)==0 || stacks[start] == stacks[end]) {
+        return true;
+      } else {
+        console.log("Invalid Move. Please try again");
+        return false;
+      }
+    } else {
+      console.log('Invalid Input')
+      return false;
+    }
+  } else {
+    console.log('Invalid Input')
+  }
 }
 
-// What is a win in Towers of Hanoi? When should this function run?
+// Func that checks for win. checks length and order of stacks b and c
 const checkForWin = () => {
-  // Your code here
-
+//makes sure that the stack is first full
+  if(stacks['c'].length === 4){
+ //checking values in 3 places for correct order
+    if(stacks['c'][0] === 4 && stacks['c'][1] === 3 && stacks['c'][3] === 1){
+      console.log('Winner!!!!!!!!!!!!')
+      return true;
+    }
+    //same as above but for tower 'b'
+  } else if(stacks['b'].length === 4){
+    if(stacks['b'][0] === 4 && stacks['b'][1] === 3 && stacks['b'][3] === 1){
+      console.log('Winner!!!!!!!!!!!!')
+      return true;
+    }
+  } else {
+    return false;
+  }
 }
 
-// When is this function called? What should it do with its argument?
+// Func thats checking for legal move, then calling func to move stone, and then checking for win
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
+  
+  if (isLegal(startStack, endStack)){
+    movePiece(startStack, endStack)
+    checkForWin()
+  } 
+  
 
 }
-
+//Gets input from user and starts the game
 const getPrompt = () => {
   printStacks();
   rl.question('start stack: ', (startStack) => {
@@ -62,8 +93,8 @@ const getPrompt = () => {
     });
   });
 }
-
-// Tests
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tests //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (typeof describe === 'function') {
 
@@ -94,7 +125,7 @@ if (typeof describe === 'function') {
   });
   describe('#checkForWin()', () => {
     it('should detect a win', () => {
-      stacks = { a: [], b: [4, 3, 2, 1], c: [] };
+      stacks = { a: [], b: [], c: [4, 3, 2, 1] };
       assert.equal(checkForWin(), true);
       stacks = { a: [1], b: [4, 3, 2], c: [] };
       assert.equal(checkForWin(), false);
