@@ -11,6 +11,7 @@ const rl = readline.createInterface({
 let startPoint = []
 let endPoint = []
 
+//object of arrays that will be used to play the game. each array is a tower and each value is a disk or ring
 let stacks = {
   a: [4, 3, 2, 1],
   b: [],
@@ -61,6 +62,7 @@ const checkForWin = () => {
       console.log('Winner!!!!!!!!!!!!')
       return true;
     }
+    //same as above but for tower 'b'
   } else if(stacks['b'].length === 4){
     if(stacks['b'][0] === 4 && stacks['b'][1] === 3 && stacks['b'][3] === 1){
       console.log('Winner!!!!!!!!!!!!')
